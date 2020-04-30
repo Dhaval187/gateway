@@ -1,0 +1,39 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.aspire.blog.gateway"
+    },
+    "jhipsterVersion": "6.3.1",
+    "applicationType": "gateway",
+    "baseName": "gateway",
+    "packageName": "com.aspire.blog.gateway",
+    "packageFolder": "com/aspire/blog/gateway",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": true,
+    "websocket": "spring-websocket",
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": "kafka",
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSwaggerCodegen": true,
+    "jwtSecretKey": "MzJmYTZmYmYxNzRmMWM2ODhjYjk1ZGVhMmJkODc1MGU4ZTVmNzAxOTM1YTBkOGViOGEyNjY5N2JkZmNhZDRkMTI3NDNlYzlhZjMxNjc0NmFkMzNiZjFkZDA5YjNhYjhlNjI1OWQ3Y2IwZjdhYzJhODZkMTU4Mzc0ODYyNWU0OGU=",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "angularX",
+    "clientTheme": "none",
+    "clientThemeVariant": "",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": false,
+    "blueprints": []
+  }
+}
