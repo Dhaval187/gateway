@@ -1,0 +1,36 @@
+<div>
+    <h2 id="page-heading">
+        <span>Orders</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-order" [routerLink]="['/order/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create a new Order
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="alert alert-warning" *ngIf="orders?.length === 0">
+        <span>No orders found</span>
+    </div>
+    <div class="table-responsive" *ngIf="orders?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Name</span></th>
+            <th><span>Amount</span></th>
+            <th><span>Inventory</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let order of orders ;trackBy: trackId">
+                <td><a [routerLink]="['/order', order.id, 'view' ]">{{order.id}}</a></td>
+                <td>{{order.name}}</td>
+                <td>{{order.inProgress ? 'In progress..' : order.amount}}</td>
+                <td>{{order.inProgress ? 'In progress..' : order.inventory}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

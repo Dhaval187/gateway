@@ -71,6 +71,7 @@ export class AccountService {
           this.userIdentity = account;
           this.authenticated = true;
           this.trackerService.connect();
+          this.trackerService.subscribeUser();
         } else {
           this.userIdentity = null;
           this.authenticated = false;

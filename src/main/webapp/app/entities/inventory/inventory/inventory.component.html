@@ -1,0 +1,36 @@
+<div>
+    <h2 id="page-heading">
+        <span>Inventories</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-inventory" [routerLink]="['/inventory/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create a new Inventory
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="alert alert-warning" *ngIf="inventories?.length === 0">
+        <span>No inventories found</span>
+    </div>
+    <div class="table-responsive" *ngIf="inventories?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Name</span></th>
+            <th><span>Price</span></th>
+            <th><span>Quantity</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let inventory of inventories ;trackBy: trackId">
+                <td><a [routerLink]="['/inventory', inventory.id, 'view' ]">{{inventory.id}}</a></td>
+                <td>{{inventory.name}}</td>
+                <td>{{inventory.price}}</td>
+                <td>{{inventory.quantity}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

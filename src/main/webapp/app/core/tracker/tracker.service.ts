@@ -8,11 +8,13 @@ import { AuthServerProvider } from '../auth/auth-jwt.service';
 
 import * as SockJS from 'sockjs-client';
 import * as Stomp from 'webstomp-client';
+import { JhiAlertService } from 'ng-jhipster';
 
 @Injectable({ providedIn: 'root' })
 export class JhiTrackerService {
   stompClient = null;
   subscriber = null;
+  subscriber2 = null;
   connection: Promise<any>;
   connectedPromise: any;
   listener: Observable<any>;
@@ -24,7 +26,8 @@ export class JhiTrackerService {
     private router: Router,
     private authServerProvider: AuthServerProvider,
     private location: Location,
-    private csrfService: CSRFService
+    private csrfService: CSRFService,
+    protected jhiAlertService: JhiAlertService
   ) {
     this.connection = this.createConnection();
     this.listener = this.createListener();
@@ -90,8 +93,26 @@ export class JhiTrackerService {
       this.subscriber = this.stompClient.subscribe('/topic/tracker', data => {
         this.listenerObserver.next(JSON.parse(data.body));
       });
+
     });
   }
+
+  subscribeUser() {
+    this.connection.then(() => {
+      // Subscribe system notifications
+      this.subscriber2 = this.stompClient.subscribe('/topic/user', data => {
+        const payload = JSON.parse(data.body);
+        if (payload) {
+          if (payload.success) {
+            this.jhiAlertService.success('Order with identifier ' + payload.data + ' placed successfully.');
+          } else {
+            this.jhiAlertService.error('Order with identifier ' + payload.data + ' failed. Please try again!');
+          }
+        }
+      });
+    });
+  }
+
 
   unsubscribe() {
     if (this.subscriber !== null) {

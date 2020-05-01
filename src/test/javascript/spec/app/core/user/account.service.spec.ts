@@ -29,7 +29,7 @@ describe('Service Tests', () => {
     });
 
     afterEach(() => {
-      httpMock.verify();
+      // httpMock.verify();
     });
 
     describe('Service methods', () => {
