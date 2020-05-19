@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { SERVER_API_URL } from 'app/app.constants';
@@ -13,7 +13,7 @@ type EntityArrayResponseType = HttpResponse<IOrder[]>;
 export class OrderService {
   public resourceUrl = SERVER_API_URL + 'services/order/api/orders';
 
-  constructor(protected http: HttpClient) {}
+  constructor(protected http: HttpClient) { }
 
   create(order: IOrder): Observable<EntityResponseType> {
     return this.http.post<IOrder>(this.resourceUrl, order, { observe: 'response' });
@@ -34,5 +34,12 @@ export class OrderService {
 
   delete(id: number): Observable<HttpResponse<any>> {
     return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  export(type: string): Observable<HttpResponse<any>> {
+    return this.http.get(`${this.resourceUrl}/${type}`, {
+      observe: 'response',
+      responseType: 'blob'
+    });
   }
 }

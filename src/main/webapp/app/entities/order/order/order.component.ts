@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
@@ -8,6 +8,7 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { IOrder } from 'app/shared/model/order/order.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { OrderService } from './order.service';
+import * as fileSaver from 'file-saver';
 
 @Component({
   selector: 'jhi-order',
@@ -23,7 +24,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     protected jhiAlertService: JhiAlertService,
     protected eventManager: JhiEventManager,
     protected accountService: AccountService
-  ) {}
+  ) { }
 
   loadAll() {
     this.orderService
@@ -62,5 +63,18 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   protected onError(errorMessage: string) {
     this.jhiAlertService.error(errorMessage, null, null);
+  }
+
+  exportFile(type: string) {
+    this.orderService.export(type).subscribe(
+      res => this.downloadFile(res.body, res.headers.get('content-type'),
+        res.headers.get('content-disposition').split("filename=")[1]));
+  }
+
+  downloadFile(data: any, contentType, filename) {
+    const blob = new Blob([data], { type: contentType + '; charset=utf-8' });
+    fileSaver.saveAs(blob, filename);
+    // const url = window.URL.createObjectURL(blob);
+    // window.open(url, filename);
   }
 }
