@@ -68,13 +68,22 @@ export class OrderComponent implements OnInit, OnDestroy {
   exportFile(type: string) {
     this.orderService.export(type).subscribe(
       res => this.downloadFile(res.body, res.headers.get('content-type'),
-        res.headers.get('content-disposition').split("filename=")[1]));
+        res.headers.get('content-disposition').split("filename=")[1], type));
   }
 
-  downloadFile(data: any, contentType, filename) {
+  downloadFile(data: any, contentType, filename, type) {
     const blob = new Blob([data], { type: contentType + '; charset=utf-8' });
-    fileSaver.saveAs(blob, filename);
-    // const url = window.URL.createObjectURL(blob);
-    // window.open(url, filename);
+    if(type === 'PRINT'){
+      const blobUrl = URL.createObjectURL(blob);
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.src = blobUrl;
+      document.body.appendChild(iframe);
+      iframe.contentWindow.print();
+    }else{
+      fileSaver.saveAs(blob, filename);
+      // const url = window.URL.createObjectURL(blob);
+      // window.open(url, filename);
+    }
   }
 }
